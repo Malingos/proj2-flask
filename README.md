@@ -10,4 +10,4 @@ A starter project for using the Flask framework
   * The current week (just the column with the week number, or the
     whole row if you prefer) should be highlighted in some way. 
 
-* Does not work :(
+* Now works!
