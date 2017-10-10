@@ -7,22 +7,24 @@
    media="print"/> 
 
 </head>
-
+<!--Need a way to tell if a week is "this week", each entry is one week from start date -->
 <body>
 <h1>Schedule</h1>
 
 <table class="class-schedule">
+  <p> weeknum is {{g.weekNum}}</p>
   {% for entry in g.schedule %}
-  {% if loop.index is divisibleby 2 %}
-  <tr class="even">
-  {% else %}
-  <tr class="odd">
-  {% endif %}	   
+    {% if g.weekNum == loop.index %}
+      <tr class="currentWeek"> 
+    {% else %} 
+      <tr class="odd">
+    {% endif %}
     <td class="week">{{ entry.week }}</td>
     <td class="topic">{{ entry.topic }}</td>
     <td class="project">{{ entry.project}}</td>
-  </tr>
+    </tr>
   {% endfor %}
+</table>
   
 
 

@@ -19,7 +19,13 @@ table .class-schedule: {
     margin: 5px;
     padding: 3px;
 }
-
+tr.currentWeek {
+    /* Highlight of the current week */
+    background-color: rgb(250,0,250); /* a pink color (i think) */
+}
+/*tr.def {
+    background-color: rgb(210,210,150);
+}*/
 tr.odd {
     /* A little darker */
     background-color: rgb(216,202,160);

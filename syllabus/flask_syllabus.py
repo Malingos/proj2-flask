@@ -32,9 +32,16 @@ if configuration.DEBUG:
 # Pre-processed schedule is global, so be careful to update
 # it atomically in the view functions.
 #
-schedule = pre.process(open(configuration.SYLLABUS))
-
-
+print("Pre-processing")
+data = pre.process(open(configuration.SYLLABUS))
+schedule = data[0]#pre.process(open(configuration.SYLLABUS))
+weekNum = data[1]#pre.getWeekNum(open(configuration.SYLLABUS))
+print("Week num")
+print(weekNum)
+#print("WeekNum\n")
+#print(weekNum)
+#weekNum = pre.getWeekNum()
+#print("First weeknum: " + weekNum +" \n")
 ###
 # Pages
 # Each of these transmits the default "200/OK" header
@@ -44,9 +51,24 @@ schedule = pre.process(open(configuration.SYLLABUS))
 @app.route("/")
 @app.route("/index")
 def index():
+    global weekNum
     """Main application page; most users see only this"""
     app.logger.debug("Main page entry")
+    #global currentWeek
+    #currentWeek = 0 
+    #flask.g.currentWeek = currentWeek #hopefully this will let me say that this is the current week in the html when i am keeping track of the loopinng things
+    #flask.g.weekNum = pre.getWeekNum()
     flask.g.schedule = schedule  # To be accessible in Jinja2 on page
+#    something = flask.render_template('syllabus.html')
+#    weekNum = pre.process(open(configuration.SYLLABUS))
+    flask.g.weekNum = weekNum
+    print("Flask weeknum {}".format(flask.g.weekNum))
+    print(type(flask.g.weekNum))
+#    print("Index Weeknum")
+#    print(weekNum)
+    #flask.g.weekNum = pre.getWeekNum()
+    #print(flask.g.weekNum)
+    #return something
     return flask.render_template('syllabus.html')
 
 
@@ -55,7 +77,13 @@ def refresh():
     """Admin user (or debugger) can use this to reload the schedule."""
     app.logger.debug("Refreshing schedule")
     global schedule
-    schedule = pre.process(open(configuration.SYLLABUS))
+#    global weekNum
+    global data
+    data = pre.process(open(configuration.SYLLABUS))
+    schedule = data[0]#pre.process(open(configuration.SYLLABUS))
+    global weekNum
+    weekNum = data[1]#pre.cWeekNum(open(configuration.SYLLABUS))
+#    weekNum = pre.getWeekNum()
     return flask.redirect(flask.url_for("index"))
 
 ### Error pages ###
